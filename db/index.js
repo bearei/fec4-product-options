@@ -8,9 +8,11 @@
 // module.exports = db;
 
 const mariadb = require('mariadb');
+const knex = require('knex');
+const config = require('../knexfile');
 
-var env = 'development';
-var knex = require('knex')(config[env]);
+const env = 'development';
+knex(config[env]);
 
 module.exports = knex;
 
