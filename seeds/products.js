@@ -30,7 +30,9 @@ exports.seed = (knex, Promise) => {
 
         const getFileContent = () => {
           const pathway = path.join(__dirname, `/productData/productData${i}.csv`);
-          fs.readFile(pathway, 'utf8', (err, fileData) => {
+          console.log('right here i am');
+          console.log(i);
+          fs.readFile(pathway, (err, fileData) => {
             if (err) {
               throw 'error writing product data into file';
             }
