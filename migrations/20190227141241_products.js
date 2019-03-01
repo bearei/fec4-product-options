@@ -4,13 +4,13 @@ exports.up = function productsUp(knex, Promise) {
       table.increments('itemId').primary();
       table.string('brand');
       table.string('title');
-      table.integer('averageRating');
+      table.decimal('averageRating');
       table.integer('reviewCount');
-      table.boolean('freeShipping');
-      table.boolean('shippingRestriction');
+      table.string('freeShipping');
+      table.string('shippingRestriction');
     }),
     knex.schema.createTable('variants', table => {
-      table.increments('variant_Id').primary();
+      table.integer('variant_Id').primary();
       table.integer('itemId');
       table.string('price');
       table.string('color');
