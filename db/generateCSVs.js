@@ -156,9 +156,11 @@ const readProductFiles = () => {
       .on('error', reject);
   });
 };
+const pathway = path.join(__dirname, `../seeds/variantData/variantData${10}.csv`);
+console.log(pathway);
 
 // handleProductCSV();
-handleVariantCSV2();
+// handleVariantCSV2();
 // readProductFiles();
 // handleVariantCSV();
 module.exports = { variantFiles, productFiles };
