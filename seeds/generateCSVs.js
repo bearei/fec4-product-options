@@ -15,13 +15,11 @@ const handleProductCSV = () => {
 
     const productInJSONFormat = JSON.stringify(sampleProducts);
     const pathway = path.join(__dirname, `/productData/productData${i}.csv`);
-    return writeFile(pathway, productInJSONFormat)
+    writeFile(pathway, productInJSONFormat)
       .then(() => console.log('file created successfully'))
       .then(() => {
         readFile(pathway, 'utf-8')
-          .then(data => {
-            return data;
-          })
+          .then(data => console.log(data))
           .catch(err => console.log('Error', err));
       });
   }
@@ -41,17 +39,15 @@ const handleVariantCSV = () => {
     const productInJSONFormat = JSON.stringify(flattenVariantList);
 
     const pathway = path.join(__dirname, `/variantData/variantData${i}.csv`);
-    return writeFile(pathway, productInJSONFormat)
+    writeFile(pathway, productInJSONFormat)
       .then(() => console.log('file created successfully'))
       .then(() => {
         readFile(pathway, 'utf-8')
-          .then(data => {
-            return data;
-          })
+          .then(data => console.log(data))
           .catch(err => console.log('Error', err));
       });
   }
 };
 
-exports.handleProductCSV = handleProductCSV;
-exports.handleVariantCSV = handleVariantCSV;
+handleProductCSV();
+handleVariantCSV();

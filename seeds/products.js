@@ -1,7 +1,4 @@
-const { handleProductCSV, handleVariantCSV } = require('./generateCSVs');
-const {} = require('./generateCSVs');
-const fs = require('fs');
-const path = require('path');
+const seedFile = require('knex-seed-file');
 
 exports.seed = (knex, Promise) => {
   return knex('variants')
@@ -10,12 +7,23 @@ exports.seed = (knex, Promise) => {
       knex('products').del();
     })
     .then(() => {
-      const data = handleProductCSV();
-      return knex('products').insert(data);
+      for (let i = 1; i < 11; i++) {
+        const pathway = path.join(__dirname, `/productData/productData${i}.csv`);
+        seedFile(knex, pathway, 'products', [
+          'brand',
+          'title',
+          'averageRating',
+          'reviewCount',
+          'freeShipping',
+          'shippingRestriction'
+        ]);
+      }
     })
     .then(() => {
-      const data = handleVariantCSV();
-      return knex('variants').insert(data);
+      for (let i = 1; i < 31; i++) {
+        const pathway = path.join(__dirname, `/variantData/variantData${i}.csv`);
+        seedFile(knex, pathway, 'variants', ['itemId', 'price', 'color', 'size']);
+      }
     })
     .catch(err => {
       console.log('Error', err);

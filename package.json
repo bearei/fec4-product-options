@@ -9,7 +9,6 @@
     "node": ">=6.13.0"
   },
   "scripts": {
-    "seed:csv": "node seeds/generateCSVs.js",
     "start": "nodemon server/index.js",
     "test": "jest",
     "dev:react": "webpack -d --watch",
@@ -48,6 +47,7 @@
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-react": "^7.12.4",
+    "knex-seed-file": "^0.5.1",
     "prettier": "^1.16.4",
     "webpack": "^4.29.3",
     "webpack-cli": "^3.2.3"
