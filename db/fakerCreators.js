@@ -1,11 +1,10 @@
 const faker = require('faker');
 
-const generateFakeVariants = (variantId, itemId) => {
+const generateFakeVariants = itemId => {
   // const variants = [];
   // const isUniqueColor = color => variants.every(variant => variant.color !== color);
 
   const variant = {
-    variant_Id: variantId,
     itemId: itemId,
     price: (Math.random() * 100).toFixed(2),
     color: faker.internet.color(),
