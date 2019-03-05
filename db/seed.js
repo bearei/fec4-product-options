@@ -1,9 +1,5 @@
 const db = require('./index.js');
 // const Product = require('./Product.js');
-const {
-  generateFakeVariants,
-  generateFakeProduct,
-} = require('./fakerGenerator.js');
 
 // const sampleProducts = [];
 

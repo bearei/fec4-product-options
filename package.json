@@ -14,7 +14,7 @@
     "dev:react": "webpack -d --watch",
     "build": "webpack --mode production",
     "db:setup": "node db/seed.js",
-    "csv": "node --max-old-space-size=8000 db/generatecsvs.js",
+    "create:csvs": "node --max-old-space-size=8000 db/createCSVs.js",
     "cassandra:cql": "cqlsh --f db/cassandra.cql"
   },
   "dependencies": {
