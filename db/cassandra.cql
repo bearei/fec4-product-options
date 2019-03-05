@@ -25,6 +25,8 @@ CREATE TABLE variants (
    size VARCHAR
 );
 
+COPY product_options.products (itemId, brand, title, averageRating, reviewCount, freeShipping, shippingRestriction) FROM './seeds/productData/productData1.csv/' WITH HEADER = TRUE ;
+COPY product_options.products (itemId, brand, title, averageRating, reviewCount, freeShipping, shippingRestriction) FROM './seeds/productData/productData2.csv/' WITH HEADER = TRUE ;
 
 COPY product_options.variants (variant_id, itemId, price, color, size) FROM './seeds/variantData/variantData1.csv/' WITH HEADER = TRUE ;
 COPY product_options.variants (variant_id, itemId, price, color, size) FROM './seeds/variantData/variantData2.csv/' WITH HEADER = TRUE ;
