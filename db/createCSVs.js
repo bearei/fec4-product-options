@@ -100,11 +100,38 @@ const readProductFiles = () => {
 };
 // readProductFiles();
 
+const practiceInput = () => {
+  let id = 1;
+  const sampleProducts = []; // 5 mil/2 files
+  for (let j = 1; j <= 10; j++) {
+    sampleProducts.push(generateFakeProduct(id));
+    id += 1;
+  }
+  const pathway = path.join(__dirname, `../seeds/productData${15}.csv`);
+
+  const csvWriter = createCsvWriter({
+    path: pathway,
+    header: [
+      { id: 'itemId', title: 'itemId' },
+      { id: 'brand', title: 'brand' },
+      { id: 'title', title: 'title' },
+      { id: 'averageRating', title: 'averageRating' },
+      { id: 'reviewCount', title: 'reviewCount' },
+      { id: 'freeShipping', title: 'freeShipping' },
+      { id: 'shippingRestriction', title: 'shippingRestriction' },
+    ],
+  });
+
+  csvWriter
+    .writeRecords(sampleProducts)
+    .then(() => console.log('The PRODUCT CSV file was written successfully'));
+};
+
 const createCSVs = async () => {
   console.time('createcsvs');
-
-  await handleProductCSV();
-  await handleVariantCSV();
+  await practiceInput();
+  // await handleProductCSV();
+  // await handleVariantCSV();
 
   console.timeEnd('createcsvs');
 };

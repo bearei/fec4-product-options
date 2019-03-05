@@ -15,7 +15,7 @@
     "build": "webpack --mode production",
     "db:setup": "node db/seed.js",
     "create:csvs": "node --max-old-space-size=8000 db/createCSVs.js",
-    "cassandra:cql": "cqlsh --f db/cassandra.cql"
+    "cass:cql": "cqlsh --f db/cassandra.cql"
   },
   "dependencies": {
     "axios": "^0.18.0",
