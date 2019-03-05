@@ -13,7 +13,9 @@
     "test": "jest",
     "dev:react": "webpack -d --watch",
     "build": "webpack --mode production",
-    "db:setup": "node db/seed.js"
+    "db:setup": "node db/seed.js",
+    "csv": "node --max-old-space-size=8000 db/generatecsvs.js",
+    "cassandra:cql": "cqlsh --f db/cassandra.cql"
   },
   "dependencies": {
     "axios": "^0.18.0",

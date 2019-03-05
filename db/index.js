@@ -6,5 +6,3 @@
 // const db = mongoose.connection;
 
 // module.exports = db;
-
-const mariadb = require('mariadb');
