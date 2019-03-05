@@ -81,8 +81,66 @@ const product = () => {
 //////////////////
 //////////////////
 //////////////////
-
 const handleProductCSV = () => {
+  for (let i = 1; i <= 2; i++) {
+    const sampleProducts = []; // 5 mil/2 files
+    for (let j = 1; j <= 5000000; j++) {
+      sampleProducts.push(generateFakeProduct());
+    }
+
+    const pathway = path.join(__dirname, `../seeds/productData/productData${i}.csv`);
+
+    const csvWriter = createCsvWriter({
+      path: pathway,
+      header: [
+        { id: 'brand', title: 'brand' },
+        { id: 'title', title: 'title' },
+        { id: 'averageRating', title: 'averageRating' },
+        { id: 'reviewCount', title: 'reviewCount' },
+        { id: 'freeShipping', title: 'freeShipping' },
+        { id: 'shippingRestriction', title: 'shippingRestriction' }
+      ]
+    });
+
+    csvWriter
+      .writeRecords(sampleProducts)
+      .then(() => console.log('The PRODUCT CSV file was written successfully'));
+  }
+};
+
+const handleVariantCSV = () => {
+  // csv files
+  let itemCounter = 1;
+  let modulo = 0;
+  for (let i = 1; i <= 5; i++) {
+    const variants = [];
+    //  3 variants per 1 products
+    for (let j = 1; j <= 6000000; j++) {
+      const variantList = generateFakeVariants(itemCounter);
+      modulo += 1;
+      variants.push(variantList);
+      if (modulo % 3 === 0) {
+        itemCounter += 1;
+        modulo = 0;
+      }
+    }
+    const pathway = path.join(__dirname, `../seeds/variantData/variantData${i}.csv`);
+    const csvWriter = createCsvWriter({
+      path: pathway,
+      header: [
+        { id: 'itemId', title: 'itemId' },
+        { id: 'price', title: 'price' },
+        { id: 'color', title: 'color' },
+        { id: 'size', title: 'size' }
+      ]
+    });
+    csvWriter
+      .writeRecords(variants)
+      .then(() => console.log('The VARIANT CSV file was written successfully'));
+  }
+};
+
+const xhandleProductCSV = () => {
   for (let i = 1; i <= 10; i++) {
     var sampleProducts = [];
     for (let j = 1; j <= 1000000; j++) {
@@ -110,7 +168,7 @@ const handleProductCSV = () => {
   }
 };
 
-const handleVariantCSV1 = () => {
+const xhandleVariantCSV1 = () => {
   // csv files
   var itemCounter = 1;
   var modulo = 0;
@@ -145,7 +203,7 @@ const handleVariantCSV1 = () => {
   }
 };
 
-const handleVariantCSV2 = () => {
+const xhandleVariantCSV2 = () => {
   // csv files
   var itemCounter = 5000001;
   var modulo = 0;
@@ -232,7 +290,7 @@ const createCSVs = async () => {
   console.time('createcsvs');
   // await handleVariantCSV1();
   // await handleProductCSV();
-  await handleVariantCSV2();
+  await handleVariantCSV();
   console.timeEnd('createcsvs');
 };
 // createCSVs();
