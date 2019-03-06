@@ -1,9 +1,6 @@
 const faker = require('faker');
 
 const generateFakeVariants = itemId => {
-  // const variants = [];
-  // const isUniqueColor = color => variants.every(variant => variant.color !== color);
-
   const variant = {
     variant_Id: null,
     itemId: itemId,
@@ -11,27 +8,18 @@ const generateFakeVariants = itemId => {
     color: faker.internet.color(),
     size: ['XS', 'S', 'M', 'L', 'XL'][Math.floor(Math.random() * 5)]
   };
-  // if (isUniqueColor(variant.color)) {
-  // variants.push(variant);
-  // }
 
   return variant;
 };
 
 // without csv
 const xgenerateFakeVariants = itemId => {
-  // const variants = [];
-  // const isUniqueColor = color => variants.every(variant => variant.color !== color);
-
   const variant = {
     itemId: itemId,
     price: (Math.random() * 100).toFixed(2),
     color: faker.internet.color(),
     size: ['XS', 'S', 'M', 'L', 'XL'][Math.floor(Math.random() * 5)]
   };
-  // if (isUniqueColor(variant.color)) {
-  // variants.push(variant);
-  // }
 
   return variant;
 };
@@ -39,6 +27,7 @@ const xgenerateFakeVariants = itemId => {
 const generateFakeProduct = () => {
   // const id = Math.floor(Math.random() * 100);
   const fakeProduct = {
+    itemId: null,
     brand: faker.commerce.productName().split(' ')[0],
     title: faker.commerce.productName(),
     averageRating: (Math.random() * 5).toFixed(1),
