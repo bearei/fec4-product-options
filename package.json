@@ -13,7 +13,9 @@
     "test": "jest",
     "dev:react": "webpack -d --watch",
     "build": "webpack --mode production",
-    "db:setup": "node db/seed.js"
+    "db:setup": "node db/seed.js",
+    "create:csvs": "node --max-old-space-size=8000 db/generateCSVs.js",
+    "seed:maria": "mysql -u root < db/mariadb.sql"
   },
   "dependencies": {
     "axios": "^0.18.0",

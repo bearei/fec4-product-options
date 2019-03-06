@@ -77,14 +77,11 @@ const product = () => {
   }
 };
 
-//////////////////
-//////////////////
-//////////////////
-//////////////////
 const handleProductCSV = () => {
   for (let i = 1; i <= 2; i++) {
     const sampleProducts = []; // 5 mil/2 files
     for (let j = 1; j <= 5000000; j++) {
+      // 5mill
       sampleProducts.push(generateFakeProduct());
     }
 
@@ -114,7 +111,7 @@ const handleVariantCSV = () => {
   let modulo = 0;
   for (let i = 1; i <= 5; i++) {
     const variants = [];
-    //  3 variants per 1 products
+    //  3 variants per 1 products - 6 mil
     for (let j = 1; j <= 6000000; j++) {
       const variantList = generateFakeVariants(itemCounter);
       modulo += 1;
@@ -128,6 +125,7 @@ const handleVariantCSV = () => {
     const csvWriter = createCsvWriter({
       path: pathway,
       header: [
+        { id: 'variant_Id', title: 'variant_Id' },
         { id: 'itemId', title: 'itemId' },
         { id: 'price', title: 'price' },
         { id: 'color', title: 'color' },
@@ -284,13 +282,10 @@ const readProductFiles2 = () => {
 };
 // readProductFiles2();
 
-// const pathway = path.join(__dirname, `../seeds/variantData/variantData${10}.csv`);
-// console.log(pathway);
 const createCSVs = async () => {
   console.time('createcsvs');
-  // await handleVariantCSV1();
-  // await handleProductCSV();
+  await handleProductCSV();
   await handleVariantCSV();
   console.timeEnd('createcsvs');
 };
-// createCSVs();
+createCSVs();

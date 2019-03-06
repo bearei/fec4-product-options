@@ -5,6 +5,7 @@ const generateFakeVariants = itemId => {
   // const isUniqueColor = color => variants.every(variant => variant.color !== color);
 
   const variant = {
+    variant_Id: null,
     itemId: itemId,
     price: (Math.random() * 100).toFixed(2),
     color: faker.internet.color(),
