@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 
-const { getProduct, createProduct, updateProduct } = require('../db/index');
+const { getProduct, createProduct, updateProduct, deleteProduct } = require('../db/index');
 
 const app = express();
 const port = 3001;
@@ -60,8 +60,19 @@ app.post('/products/', (req, res) => {
 
 app.put('/products/:itemId', (req, res) => {
   const updatedItem = req.body;
-  updateProduct(updatedItem).then(() => {
+  const itemId = req.params.itemId;
+  console.log('before..00000');
+  console.log(updatedItem);
+  updateProduct(itemId, updatedItem).then(() => {
     console.log('product updated!');
+    res.status(200).end();
+  });
+});
+
+app.delete('/products/:itemId', (req, res) => {
+  const itemId = req.params.itemId;
+  deleteProduct(itemId).then(() => {
+    console.log('product deleted!');
     res.status(200).end();
   });
 });

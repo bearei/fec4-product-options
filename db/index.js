@@ -48,13 +48,24 @@ const createProduct = product => {
     });
 };
 
-const updateProduct = productInfo => {
-  console.log(productInfo);
-  return;
+const updateProduct = (itemId, productInfo) => {
+  return knex('products')
+    .where('itemId', itemId)
+    .update(productInfo)
+    .then(result => {
+      console.log('updated product!');
+      return result;
+    });
+};
+
+const deleteProduct = itemId => {
+  return knex('products')
+    .where({ itemId: itemId })
+    .del();
 };
 
 module.exports = knex;
-module.exports = { getProduct, createProduct, updateProduct };
+module.exports = { getProduct, createProduct, updateProduct, deleteProduct };
 
 //SELECT brand, title, averageRating, reviewCount, freeShipping,
 // shippingRestriction, price, color, size FROM products p INNER JOIN
