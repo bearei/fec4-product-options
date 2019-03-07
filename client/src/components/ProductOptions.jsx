@@ -23,7 +23,7 @@ class ProductOptions extends React.Component {
       product: {},
       selectedVariant: {},
       colors: [],
-      sizes: [],
+      sizes: []
     };
 
     this.getRandomProduct = this.getRandomProduct.bind(this);
@@ -36,24 +36,26 @@ class ProductOptions extends React.Component {
   componentDidMount() {
     this.getRandomProduct();
   }
-
+  // will need to create get request for below product's 3 varieants - variants/:itemId
   getRandomProduct() {
-    axios.get('http://localhost:3001/products/random')
-      .then((response) => {
-        const randomProduct = response.data;
-        const randomIndex = Math.floor(Math.random() * randomProduct.variants.length);
-        const randomVariant = randomProduct.variants[randomIndex];
+    axios.get('http://localhost:3001/products/random').then(response => {
+      const randomProduct = response.data;
+      const randomIndex = Math.floor(Math.random() * randomProduct.variants.length);
+      const randomVariant = randomProduct.variants[randomIndex];
 
-        this.setState({
+      this.setState(
+        {
           product: randomProduct,
-          selectedVariant: randomVariant,
-        }, () => {
+          selectedVariant: randomVariant
+        },
+        () => {
           this.setState({
             colors: this.renderColors(),
-            sizes: this.renderSizes(),
+            sizes: this.renderSizes()
           });
-        });
-      });
+        }
+      );
+    });
   }
 
   handleColorClick(color) {
@@ -70,10 +72,17 @@ class ProductOptions extends React.Component {
 
   renderColors() {
     const { product, selectedVariant } = this.state;
-    return product.variants.map((variant) => {
+    return product.variants.map(variant => {
       const isSelected = variant['_id'] === selectedVariant['_id'];
 
-      return <Color color={variant.color} key={variant['_id']} handleColorClick={this.handleColorClick} selected={isSelected} />;
+      return (
+        <Color
+          color={variant.color}
+          key={variant['_id']}
+          handleColorClick={this.handleColorClick}
+          selected={isSelected}
+        />
+      );
     });
   }
 
@@ -91,12 +100,7 @@ class ProductOptions extends React.Component {
   }
 
   render() {
-    const {
-      product,
-      selectedVariant,
-      colors,
-      sizes,
-    } = this.state;
+    const { product, selectedVariant, colors, sizes } = this.state;
 
     return (
       <div className="productOptions">

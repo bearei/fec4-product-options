@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 
-const Product = require('../db/Product.js');
+const { getProduct, createProduct, updateProduct } = require('../db/index');
 
 const app = express();
 const port = 3001;
@@ -18,32 +18,52 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get('/products', (req, res) => {
-  Product.find()
-    .then(products => res.status(200).send(JSON.stringify(products)))
-    .catch((err) => {
-      res.status(500).send(err);
-    });
-});
+// app.get('/products', (req, res) => {
+//   Product.find()
+//     .then(products => res.status(200).send(JSON.stringify(products)))
+//     .catch((err) => {
+//       res.status(500).send(err);
+//     });
+// });
 
 app.get('/products/random', (req, res) => {
-  Product.find()
-    .then((products) => {
-      const numOfProducts = products.length;
-      const randomProduct = products[Math.floor(Math.random() * numOfProducts)];
-      res.status(200).send(JSON.stringify(randomProduct));
+  const randomProductId = Math.floor(Math.random() * 10000000);
+  getProduct(randomProductId)
+    .then(product => {
+      console.log('retrieved the random product');
+      res.status(200).send(JSON.stringify(product));
     })
-    .catch((err) => {
+    .catch(err => {
       res.status(500).send(err);
     });
 });
 
 app.get('/products/:itemId', (req, res) => {
-  Product.find({ itemId: req.params.itemId })
-    .then(product => res.status(200).send(JSON.stringify(product)))
-    .catch((err) => {
+  const itemId = req.params.itemId;
+  getProduct(itemId)
+    .then(product => {
+      console.log('retrieved specific product');
+      res.status(200).send(JSON.stringify(product));
+    })
+    .catch(err => {
       res.status(500).send(err);
     });
+});
+
+app.post('/products/', (req, res) => {
+  const product = req.body;
+  createProduct(product).then(() => {
+    console.log('created product!');
+    res.status(200).end();
+  });
+});
+
+app.put('/products/:itemId', (req, res) => {
+  const updatedItem = req.body;
+  updateProduct(updatedItem).then(() => {
+    console.log('product updated!');
+    res.status(200).end();
+  });
 });
 
 if (!module.parent) {
