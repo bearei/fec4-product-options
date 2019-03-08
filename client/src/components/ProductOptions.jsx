@@ -21,6 +21,7 @@ class ProductOptions extends React.Component {
     super();
     this.state = {
       product: {},
+      variants: [],
       selectedVariant: {},
       colors: [],
       sizes: []
@@ -39,13 +40,19 @@ class ProductOptions extends React.Component {
   // will need to create get request for below product's 3 varieants - variants/:itemId
   getRandomProduct() {
     axios.get('http://localhost:3001/products/random').then(response => {
-      const randomProduct = response.data;
-      const randomIndex = Math.floor(Math.random() * randomProduct.variants.length);
-      const randomVariant = randomProduct.variants[randomIndex];
+      console.log(response.data);
+
+      const randomIndex = Math.floor(Math.random() * response.data.length);
+      const randomProduct = response.data[randomIndex];
+      randomProduct.freeShipping = randomProduct.freeShipping === 'true';
+      randomProduct.shippingRestriction = randomProduct.shippingRestriction === 'true';
+      const variants = response.data;
+      const randomVariant = randomProduct;
 
       this.setState(
         {
           product: randomProduct,
+          variants: variants,
           selectedVariant: randomVariant
         },
         () => {
@@ -59,8 +66,8 @@ class ProductOptions extends React.Component {
   }
 
   handleColorClick(color) {
-    const { product } = this.state;
-    const variantClicked = product.variants.filter(variant => variant.color === color)[0];
+    const { variants } = this.state;
+    const variantClicked = variants.filter(variant => variant.color === color)[0];
     this.updateVariant(variantClicked);
   }
 
@@ -71,14 +78,14 @@ class ProductOptions extends React.Component {
   }
 
   renderColors() {
-    const { product, selectedVariant } = this.state;
-    return product.variants.map(variant => {
-      const isSelected = variant['_id'] === selectedVariant['_id'];
+    const { product, variants } = this.state;
+    return variants.map(variant => {
+      const isSelected = variant._id === product.variant_id;
 
       return (
         <Color
           color={variant.color}
-          key={variant['_id']}
+          key={variant.variant_id}
           handleColorClick={this.handleColorClick}
           selected={isSelected}
         />
@@ -87,8 +94,8 @@ class ProductOptions extends React.Component {
   }
 
   renderSizes() {
-    const { product } = this.state;
-    const uniqueSizes = product.variants.reduce((accum, currentVariant) => {
+    const { product, variants } = this.state;
+    const uniqueSizes = variants.reduce((accum, currentVariant) => {
       const currentSize = currentVariant.size;
       return accum.concat(!accum.includes(currentSize) ? currentSize : []);
     }, []);

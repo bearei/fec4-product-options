@@ -8,25 +8,29 @@ const knex = require('knex')(config[env]);
 const getProduct = itemId => {
   console.log('accessing mariadb..');
 
-  return knex
-    .select(
-      'brand',
-      'title',
-      'averageRating',
-      'reviewCount',
-      'freeShipping',
-      'shippingRestriction',
-      'price',
-      'color',
-      'size'
-    )
-    .from('products')
+  return knex('products')
+    .select([
+      'products.itemId',
+      'variants.variant_id',
+      'products.brand',
+      'products.title',
+      'products.averageRating',
+      'products.reviewCount',
+      'products.freeShipping',
+      'products.shippingRestriction',
+      'variants.price',
+      'variants.color',
+      'variants.size'
+    ])
     .innerJoin('variants', 'products.itemId', 'variants.itemId')
     .where('products.itemId', itemId)
     .then(product => {
+      console.log(product);
       return product;
     });
 };
+
+///////
 
 const createProduct = product => {
   const productDetails = {
@@ -67,6 +71,6 @@ const deleteProduct = itemId => {
 module.exports = knex;
 module.exports = { getProduct, createProduct, updateProduct, deleteProduct };
 
-//SELECT brand, title, averageRating, reviewCount, freeShipping,
+// SELECT brand, title, averageRating, reviewCount, freeShipping,
 // shippingRestriction, price, color, size FROM products p INNER JOIN
 // variants v ON p.itemId = v.itemId WHERE p.itemId = 9799999;
