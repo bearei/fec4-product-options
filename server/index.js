@@ -1,60 +1,59 @@
 require('newrelic');
 const express = require('express');
 const bodyParser = require('body-parser');
-const path = require('path');
+// const cors = require('cors');
 
-const { getProduct, createProduct, updateProduct, deleteProduct } = require('../db/index');
+const {
+  getProduct,
+  createProduct,
+  updateProduct,
+  deleteProduct,
+  getVariants
+} = require('../db/index');
 
 const app = express();
 const port = 3001;
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(express.static(path.join(__dirname, '/../public')));
-
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  next();
-});
-
-// app.get('/products', (req, res) => {
-//   Product.find()
-//     .then(products => res.status(200).send(JSON.stringify(products)))
-//     .catch((err) => {
-//       res.status(500).send(err);
-//     });
-// });
+app.use(express.static(__dirname + '/../public'));
 
 app.get('/products/random', (req, res) => {
   const randomProductId = Math.floor(Math.random() * 10000000);
   getProduct(randomProductId)
     .then(product => {
       console.log('retrieved the random product');
-      res.status(200).send(JSON.stringify(product));
+      res.status(200).send(product);
     })
     .catch(err => {
       res.status(500).send(err);
     });
 });
 
-app.get('/products/:itemId', (req, res) => {
-  const itemId = req.params.itemId;
-  getProduct(itemId)
+app.get('/products/:itemId', function gettingProducts(req, res) {
+  getProduct(req.params.itemId)
     .then(product => {
-      console.log('retrieved specific product');
-      res.status(200).send(JSON.stringify(product));
+      res.status(200).send(product);
     })
     .catch(err => {
       res.status(500).send(err);
     });
 });
 
-app.post('/products/', (req, res) => {
+app.get('/variants/:itemId', function gettingVariants(req, res) {
+  const itemId = req.params.itemId;
+  getVariants(itemId)
+    .then(variants => {
+      res.status(200).send(variants);
+    })
+    .catch(err => {
+      res.status(500).send(err);
+    });
+});
+
+app.post('/products/', function postingProduct(req, res) {
   const product = req.body;
   createProduct(product).then(() => {
-    console.log('created product!');
     res.status(200).end();
   });
 });
@@ -85,3 +84,18 @@ if (!module.parent) {
 }
 
 module.exports = app;
+
+// app.use(bodyParser.urlencoded({ extended: true }));
+// app.use((req, res, next) => {
+//   res.header('Access-Control-Allow-Origin', '*');
+//   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+//   next();
+// });
+
+// app.get('/products', (req, res) => {
+//   Product.find()
+//     .then(products => res.status(200).send(JSON.stringify(products)))
+//     .catch((err) => {
+//       res.status(500).send(err);
+//     });
+// });

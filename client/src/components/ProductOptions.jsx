@@ -32,6 +32,7 @@ class ProductOptions extends React.Component {
     this.renderSizes = this.renderSizes.bind(this);
     this.handleColorClick = this.handleColorClick.bind(this);
     this.updateVariant = this.updateVariant.bind(this);
+    this.getVariants = this.getVariants.bind(this);
   }
 
   componentDidMount() {
@@ -40,18 +41,30 @@ class ProductOptions extends React.Component {
   // will need to create get request for below product's 3 varieants - variants/:itemId
   getRandomProduct() {
     axios.get('http://localhost:3001/products/random').then(response => {
-      console.log(response.data);
-
-      const randomIndex = Math.floor(Math.random() * response.data.length);
-      const randomProduct = response.data[randomIndex];
+      // const randomIndex = Math.floor(Math.random() * response.data.length);
+      const randomProduct = response.data[0];
+      // console.log(randomProduct);
       randomProduct.freeShipping = randomProduct.freeShipping === 'true';
       randomProduct.shippingRestriction = randomProduct.shippingRestriction === 'true';
-      const variants = response.data;
-      const randomVariant = randomProduct;
+      // const variants = response.data;
+      // const randomVariant = randomProduct;
+      this.getVariants(randomProduct.itemId);
 
+      this.setState({
+        product: randomProduct
+      });
+    });
+  }
+
+  getVariants(itemId) {
+    axios.get(`http://localhost:3001/variants/${itemId}`).then(response => {
+      const randomIndex = Math.floor(Math.random() * response.data.length);
+      // console.log(response.data);
+      const variants = response.data;
+      const randomVariant = variants[randomIndex];
+      // console.log(randomVariant.variant_Id);
       this.setState(
         {
-          product: randomProduct,
           variants: variants,
           selectedVariant: randomVariant
         },
@@ -80,12 +93,12 @@ class ProductOptions extends React.Component {
   renderColors() {
     const { product, variants } = this.state;
     return variants.map(variant => {
-      const isSelected = variant._id === product.variant_id;
+      const isSelected = variant.itemId === product.itemId;
 
       return (
         <Color
           color={variant.color}
-          key={variant.variant_id}
+          key={variant.variant_Id}
           handleColorClick={this.handleColorClick}
           selected={isSelected}
         />
@@ -94,7 +107,7 @@ class ProductOptions extends React.Component {
   }
 
   renderSizes() {
-    const { product, variants } = this.state;
+    const { variants } = this.state;
     const uniqueSizes = variants.reduce((accum, currentVariant) => {
       const currentSize = currentVariant.size;
       return accum.concat(!accum.includes(currentSize) ? currentSize : []);

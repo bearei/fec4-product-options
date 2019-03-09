@@ -6,27 +6,18 @@ const knex = require('knex')(config[env]);
 // gueries go in here
 
 const getProduct = itemId => {
-  console.log('accessing mariadb..');
-
   return knex('products')
-    .select([
-      'products.itemId',
-      'variants.variant_id',
-      'products.brand',
-      'products.title',
-      'products.averageRating',
-      'products.reviewCount',
-      'products.freeShipping',
-      'products.shippingRestriction',
-      'variants.price',
-      'variants.color',
-      'variants.size'
-    ])
-    .innerJoin('variants', 'products.itemId', 'variants.itemId')
-    .where('products.itemId', itemId)
+    .where('itemId', itemId)
     .then(product => {
-      console.log(product);
       return product;
+    });
+};
+
+const getVariants = itemId => {
+  return knex('variants')
+    .where('itemId', itemId)
+    .then(variants => {
+      return variants;
     });
 };
 
@@ -42,12 +33,9 @@ const createProduct = product => {
     shippingRestriction: product.shippingRestriction
   };
 
-  console.log(productDetails);
-
   return knex('products')
     .insert(productDetails)
     .then(result => {
-      console.log('updated db with new product');
       return result;
     });
 };
@@ -57,7 +45,6 @@ const updateProduct = (itemId, productInfo) => {
     .where('itemId', itemId)
     .update(productInfo)
     .then(result => {
-      console.log('updated product!');
       return result;
     });
 };
@@ -69,8 +56,28 @@ const deleteProduct = itemId => {
 };
 
 module.exports = knex;
-module.exports = { getProduct, createProduct, updateProduct, deleteProduct };
+module.exports = { getProduct, getVariants, createProduct, updateProduct, deleteProduct };
 
 // SELECT brand, title, averageRating, reviewCount, freeShipping,
 // shippingRestriction, price, color, size FROM products p INNER JOIN
 // variants v ON p.itemId = v.itemId WHERE p.itemId = 9799999;
+
+// return knex('products')
+// .select([
+//   'products.itemId',
+//   'products.brand',
+//   'products.title',
+//   'products.averageRating',
+//   'products.reviewCount',
+//   'products.freeShipping',
+//   'products.shippingRestriction',
+//   'variants.variant_id',
+//   'variants.price',
+//   'variants.color',
+//   'variants.size'
+// ])
+// .innerJoin('variants', 'products.itemId', 'variants.itemId')
+// .where('products.itemId', itemId)
+// .then(product => {
+//   return product;
+// });
