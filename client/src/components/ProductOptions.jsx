@@ -21,9 +21,10 @@ class ProductOptions extends React.Component {
     super();
     this.state = {
       product: {},
+      variants: [],
       selectedVariant: {},
       colors: [],
-      sizes: [],
+      sizes: []
     };
 
     this.getRandomProduct = this.getRandomProduct.bind(this);
@@ -31,34 +32,55 @@ class ProductOptions extends React.Component {
     this.renderSizes = this.renderSizes.bind(this);
     this.handleColorClick = this.handleColorClick.bind(this);
     this.updateVariant = this.updateVariant.bind(this);
+    this.getVariants = this.getVariants.bind(this);
   }
 
   componentDidMount() {
     this.getRandomProduct();
   }
-
+  // will need to create get request for below product's 3 varieants - variants/:itemId
   getRandomProduct() {
-    axios.get('http://localhost:3001/products/random')
-      .then((response) => {
-        const randomProduct = response.data;
-        const randomIndex = Math.floor(Math.random() * randomProduct.variants.length);
-        const randomVariant = randomProduct.variants[randomIndex];
+    axios.get('http://localhost:3001/products/random').then(response => {
+      // const randomIndex = Math.floor(Math.random() * response.data.length);
+      const randomProduct = response.data[0];
+      // console.log(randomProduct);
+      randomProduct.freeShipping = randomProduct.freeShipping === 'true';
+      randomProduct.shippingRestriction = randomProduct.shippingRestriction === 'true';
+      // const variants = response.data;
+      // const randomVariant = randomProduct;
+      this.getVariants(randomProduct.itemId);
 
-        this.setState({
-          product: randomProduct,
-          selectedVariant: randomVariant,
-        }, () => {
+      this.setState({
+        product: randomProduct
+      });
+    });
+  }
+
+  getVariants(itemId) {
+    axios.get(`http://localhost:3001/variants/${itemId}`).then(response => {
+      const randomIndex = Math.floor(Math.random() * response.data.length);
+      // console.log(response.data);
+      const variants = response.data;
+      const randomVariant = variants[randomIndex];
+      // console.log(randomVariant.variant_Id);
+      this.setState(
+        {
+          variants: variants,
+          selectedVariant: randomVariant
+        },
+        () => {
           this.setState({
             colors: this.renderColors(),
-            sizes: this.renderSizes(),
+            sizes: this.renderSizes()
           });
-        });
-      });
+        }
+      );
+    });
   }
 
   handleColorClick(color) {
-    const { product } = this.state;
-    const variantClicked = product.variants.filter(variant => variant.color === color)[0];
+    const { variants } = this.state;
+    const variantClicked = variants.filter(variant => variant.color === color)[0];
     this.updateVariant(variantClicked);
   }
 
@@ -69,17 +91,24 @@ class ProductOptions extends React.Component {
   }
 
   renderColors() {
-    const { product, selectedVariant } = this.state;
-    return product.variants.map((variant) => {
-      const isSelected = variant['_id'] === selectedVariant['_id'];
+    const { product, variants } = this.state;
+    return variants.map(variant => {
+      const isSelected = variant.itemId === product.itemId;
 
-      return <Color color={variant.color} key={variant['_id']} handleColorClick={this.handleColorClick} selected={isSelected} />;
+      return (
+        <Color
+          color={variant.color}
+          key={variant.variant_Id}
+          handleColorClick={this.handleColorClick}
+          selected={isSelected}
+        />
+      );
     });
   }
 
   renderSizes() {
-    const { product } = this.state;
-    const uniqueSizes = product.variants.reduce((accum, currentVariant) => {
+    const { variants } = this.state;
+    const uniqueSizes = variants.reduce((accum, currentVariant) => {
       const currentSize = currentVariant.size;
       return accum.concat(!accum.includes(currentSize) ? currentSize : []);
     }, []);
@@ -91,12 +120,7 @@ class ProductOptions extends React.Component {
   }
 
   render() {
-    const {
-      product,
-      selectedVariant,
-      colors,
-      sizes,
-    } = this.state;
+    const { product, selectedVariant, colors, sizes } = this.state;
 
     return (
       <div className="productOptions">
