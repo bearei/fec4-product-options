@@ -9,15 +9,21 @@
     "node": ">=6.13.0"
   },
   "scripts": {
+    "stress-test": "artillery run stress-test.yml",
     "start": "nodemon server/index.js",
     "test": "jest",
     "dev:react": "webpack -d --watch",
     "build": "webpack --mode production",
-    "db:setup": "node db/seed.js"
+    "db:setup": "node db/seed.js",
+    "create:csvs": "node --max-old-space-size=8000 db/generateCSVs.js",
+    "seed:maria": "mysql -u root < db/mariadb.sql"
   },
   "dependencies": {
+    "artillery": "^1.6.0-27",
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
+    "csv-writer": "^1.2.0",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.9.1",
     "express": "^4.16.4",
@@ -27,6 +33,7 @@
     "knex": "^0.16.3",
     "mariadb": "^2.0.3",
     "mysql": "^2.16.0",
+    "newrelic": "^5.6.0",
     "path": "^0.12.7",
     "prop-types": "^15.7.1",
     "react": "^16.8.1",
@@ -47,6 +54,7 @@
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-react": "^7.12.4",
+    "knex-seed-file": "^0.5.1",
     "prettier": "^1.16.4",
     "webpack": "^4.29.3",
     "webpack-cli": "^3.2.3"
