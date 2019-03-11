@@ -12,23 +12,23 @@ const {
 } = require('../db/index');
 
 const app = express();
-const port = 3001;
+const port = process.env.PORT || 3001;
 
 app.use(bodyParser.json());
 
-app.use(express.static(__dirname + '/../public'));
+app.use('/:itemId', express.static(__dirname + '/../public'));
 
-app.get('/products/random', (req, res) => {
-  const randomProductId = Math.floor(Math.random() * 10000000);
-  getProduct(randomProductId)
-    .then(product => {
-      console.log('retrieved the random product');
-      res.status(200).send(product);
-    })
-    .catch(err => {
-      res.status(500).send(err);
-    });
-});
+// app.get('/products/random', (req, res) => {
+//   const randomProductId = Math.floor(Math.random() * 10000000);
+//   getProduct(randomProductId)
+//     .then(product => {
+//       console.log('retrieved the random product');
+//       res.status(200).send(product);
+//     })
+//     .catch(err => {
+//       res.status(500).send(err);
+//     });
+// });
 
 app.get('/products/:itemId', function gettingProducts(req, res) {
   getProduct(req.params.itemId)
