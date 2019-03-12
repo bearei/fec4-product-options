@@ -4,7 +4,7 @@ module.exports = {
   development: {
     client: 'mysql',
     connection: {
-      database: 'product_options',
+      database: 'product_options_development',
       user: 'root',
       password: ''
     },
@@ -36,16 +36,13 @@ module.exports = {
   production: {
     client: 'mysql',
     connection: {
-      database: '',
-      user: 'username',
-      password: 'password'
+      database: 'product_options',
+      user: 'root',
+      password: ''
     },
     pool: {
       min: 2,
       max: 10
-    },
-    migrations: {
-      tableName: 'product_options'
     }
   }
 };
