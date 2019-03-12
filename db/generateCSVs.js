@@ -68,7 +68,7 @@ const handleVariantCSV = () => {
 const createCSVs = async () => {
   console.time('createcsvs');
   await handleProductCSV();
-  // await handleVariantCSV();
+  await handleVariantCSV();
   console.timeEnd('createcsvs');
 };
 createCSVs();
