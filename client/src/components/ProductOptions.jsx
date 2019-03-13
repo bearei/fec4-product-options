@@ -42,7 +42,7 @@ class ProductOptions extends React.Component {
   // will need to create get request for below product's 3 varieants - variants/:itemId
   getRandomProduct() {
     const itemId = window.location.pathname.split('/')[1];
-    axios.get(`172.31.35.155:80/products/${itemId}`).then(response => {
+    axios.get(`/products/${itemId}`).then(response => {
       // const randomIndex = Math.floor(Math.random() * response.data.length);
       const randomProduct = response.data[0];
       // console.log(randomProduct);
@@ -59,7 +59,7 @@ class ProductOptions extends React.Component {
   }
 
   getVariants(itemId) {
-    axios.get(`172.31.35.155:80/variants/${itemId}`).then(response => {
+    axios.get(`/variants/${itemId}`).then(response => {
       const randomIndex = Math.floor(Math.random() * response.data.length);
       // console.log(response.data);
       const variants = response.data;
