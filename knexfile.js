@@ -4,7 +4,6 @@ module.exports = {
   development: {
     client: 'mysql',
     connection: {
-      port: '3306',
       host: '3.83.29.79',
       database: 'product_options',
       user: 'root',
@@ -23,7 +22,6 @@ module.exports = {
     client: 'mysql',
     connection: {
       host: '3.83.29.79',
-      port: '3306',
       database: 'product_options',
       user: 'root',
       password: ''
@@ -38,7 +36,6 @@ module.exports = {
     client: 'mysql',
     connection: {
       host: '3.83.29.79',
-      port: '3306',
       database: 'product_options',
       user: 'root',
       password: ''
