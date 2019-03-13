@@ -4,7 +4,7 @@ module.exports = {
   development: {
     client: 'mysql',
     connection: {
-      host: '3.82.213.114',
+      host: '3.83.29.79',
       database: 'product_options',
       user: '',
       password: ''
@@ -21,7 +21,7 @@ module.exports = {
   staging: {
     client: 'mysql',
     connection: {
-      host: '3.82.213.114',
+      host: '3.83.29.79',
       database: 'product_options',
       user: '',
       password: ''
@@ -35,7 +35,7 @@ module.exports = {
   production: {
     client: 'mysql',
     connection: {
-      host: '3.82.213.114',
+      host: '3.83.29.79',
       database: 'product_options',
       user: '',
       password: ''
