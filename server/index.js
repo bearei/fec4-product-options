@@ -18,11 +18,42 @@ app.use(bodyParser.json());
 
 app.use('/:itemId', express.static(__dirname + '/../public'));
 
-// app.get('/products/random', (req, res) => {
-//   const randomProductId = Math.floor(Math.random() * 10000000);
-//   getProduct(randomProductId)
+//////////////////////////////////
+/// for deployment to EC2 ////////
+/// setup as a proxy for db //////
+//////////////////////////////////
+const proxy = require('http-proxy-middleware');
+
+app.use(
+  '/products/:itemId',
+  proxy({
+    target: 'http://3.83.29.79:3002',
+    changeOrigin: true
+  })
+);
+
+app.use(
+  '/variants/:itemId',
+  proxy({
+    target: 'http://3.83.29.79:3002',
+    changeOrigin: true
+  })
+);
+
+app.use(
+  '/products/',
+  proxy({
+    target: 'http://3.83.29.79:3002',
+    changeOrigin: true
+  })
+);
+
+//////////////////////////////////
+//////////////////////////////////
+
+// app.get('/products/:itemId', function gettingProducts(req, res) {
+//   getProduct(req.params.itemId)
 //     .then(product => {
-//       console.log('retrieved the random product');
 //       res.status(200).send(product);
 //     })
 //     .catch(err => {
@@ -30,51 +61,41 @@ app.use('/:itemId', express.static(__dirname + '/../public'));
 //     });
 // });
 
-app.get('/products/:itemId', function gettingProducts(req, res) {
-  getProduct(req.params.itemId)
-    .then(product => {
-      res.status(200).send(product);
-    })
-    .catch(err => {
-      res.status(500).send(err);
-    });
-});
+// app.get('/variants/:itemId', function gettingVariants(req, res) {
+//   const itemId = req.params.itemId;
+//   getVariants(itemId)
+//     .then(variants => {
+//       res.status(200).send(variants);
+//     })
+//     .catch(err => {
+//       res.status(500).send(err);
+//     });
+// });
 
-app.get('/variants/:itemId', function gettingVariants(req, res) {
-  const itemId = req.params.itemId;
-  getVariants(itemId)
-    .then(variants => {
-      res.status(200).send(variants);
-    })
-    .catch(err => {
-      res.status(500).send(err);
-    });
-});
+// app.post('/products/', function postingProduct(req, res) {
+//   const product = req.body;
+//   createProduct(product).then(() => {
+//     res.status(200).end();
+//   });
+// });
 
-app.post('/products/', function postingProduct(req, res) {
-  const product = req.body;
-  createProduct(product).then(() => {
-    res.status(200).end();
-  });
-});
+// app.put('/products/:itemId', (req, res) => {
+//   const updatedItem = req.body;
+//   const itemId = req.params.itemId;
+//   // console.log(updatedItem);
+//   updateProduct(itemId, updatedItem).then(() => {
+//     console.log('product updated!');
+//     res.status(200).end();
+//   });
+// });
 
-app.put('/products/:itemId', (req, res) => {
-  const updatedItem = req.body;
-  const itemId = req.params.itemId;
-  // console.log(updatedItem);
-  updateProduct(itemId, updatedItem).then(() => {
-    console.log('product updated!');
-    res.status(200).end();
-  });
-});
-
-app.delete('/products/:itemId', (req, res) => {
-  const itemId = req.params.itemId;
-  deleteProduct(itemId).then(() => {
-    console.log('product deleted!');
-    res.status(200).end();
-  });
-});
+// app.delete('/products/:itemId', (req, res) => {
+//   const itemId = req.params.itemId;
+//   deleteProduct(itemId).then(() => {
+//     console.log('product deleted!');
+//     res.status(200).end();
+//   });
+// });
 
 if (!module.parent) {
   app.listen(port, () => {
@@ -83,18 +104,3 @@ if (!module.parent) {
 }
 
 module.exports = app;
-
-// app.use(bodyParser.urlencoded({ extended: true }));
-// app.use((req, res, next) => {
-//   res.header('Access-Control-Allow-Origin', '*');
-//   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-//   next();
-// });
-
-// app.get('/products', (req, res) => {
-//   Product.find()
-//     .then(products => res.status(200).send(JSON.stringify(products)))
-//     .catch((err) => {
-//       res.status(500).send(err);
-//     });
-// });
