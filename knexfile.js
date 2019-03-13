@@ -4,10 +4,10 @@ module.exports = {
   development: {
     client: 'mysql',
     connection: {
-      host: '35.153.167.13',
+      host: '3.82.213.114',
       database: 'product_options',
       user: '',
-      password: 'root'
+      password: ''
     },
     pool: {
       min: 2,
@@ -21,10 +21,10 @@ module.exports = {
   staging: {
     client: 'mysql',
     connection: {
-      host: '35.153.167.13',
+      host: '3.82.213.114',
       database: 'product_options',
       user: '',
-      password: 'root'
+      password: ''
     },
     pool: {
       min: 2,
@@ -35,10 +35,10 @@ module.exports = {
   production: {
     client: 'mysql',
     connection: {
-      host: '35.153.167.13',
+      host: '3.82.213.114',
       database: 'product_options',
       user: '',
-      password: 'root'
+      password: ''
     },
     pool: {
       min: 2,

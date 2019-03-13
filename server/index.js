@@ -61,8 +61,7 @@ app.post('/products/', function postingProduct(req, res) {
 app.put('/products/:itemId', (req, res) => {
   const updatedItem = req.body;
   const itemId = req.params.itemId;
-  console.log('before..00000');
-  console.log(updatedItem);
+  // console.log(updatedItem);
   updateProduct(itemId, updatedItem).then(() => {
     console.log('product updated!');
     res.status(200).end();
