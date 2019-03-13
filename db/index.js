@@ -1,6 +1,6 @@
 const config = require('../knexfile');
 
-const env = 'development';
+const env = process.env.ENVIRONMENT || 'development';
 const knex = require('knex')(config[env]);
 
 // gueries go in here
