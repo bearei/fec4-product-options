@@ -1,19 +1,19 @@
 config:
-  target: 'http://localhost:3001'
+  target: 'http://3.82.213.114:3001'
   phases:
     - duration: 300
       arrivalRate: 1000
 
 scenarios:
   - flow:
-      # - get:
-      #     url: '/products/10000000'
-      - post:
-          url: '/products/'
-          json:
-            brand: 'brand'
-            title: 'title'
-            averageRating: 23
-            reviewCount: 23
-            freeShipping: 'true'
-            shippingRestriction: 'false'
+      - get:
+          url: '/products/10000000'
+      # - post:
+      #     url: '/products/'
+      #     json:
+      #       brand: 'brand'
+      #       title: 'title'
+      #       averageRating: 23
+      #       reviewCount: 23
+      #       freeShipping: 'true'
+      #       shippingRestriction: 'false'
