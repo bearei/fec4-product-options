@@ -6,7 +6,7 @@ module.exports = {
     connection: {
       host: '3.83.29.79',
       database: 'product_options',
-      user: '',
+      user: 'root',
       password: ''
     },
     pool: {
@@ -23,7 +23,7 @@ module.exports = {
     connection: {
       host: '3.83.29.79',
       database: 'product_options',
-      user: '',
+      user: 'root',
       password: ''
     },
     pool: {
@@ -37,7 +37,7 @@ module.exports = {
     connection: {
       host: '3.83.29.79',
       database: 'product_options',
-      user: '',
+      user: 'root',
       password: ''
     },
     pool: {
