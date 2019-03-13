@@ -6,7 +6,7 @@ module.exports = {
     connection: {
       host: '35.153.167.13',
       database: 'product_options',
-      user: '',
+      user: 'sudo su',
       password: 'root'
     },
     pool: {
@@ -23,7 +23,7 @@ module.exports = {
     connection: {
       host: '35.153.167.13',
       database: 'product_options',
-      user: '',
+      user: 'sudo su',
       password: 'root'
     },
     pool: {
@@ -37,7 +37,7 @@ module.exports = {
     connection: {
       host: '35.153.167.13',
       database: 'product_options',
-      user: '',
+      user: 'sudo su',
       password: 'root'
     },
     pool: {
