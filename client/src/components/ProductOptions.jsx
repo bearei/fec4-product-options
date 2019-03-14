@@ -42,21 +42,27 @@ class ProductOptions extends React.Component {
   // will need to create get request for below product's 3 varieants - variants/:itemId
   getRandomProduct() {
     const itemId = window.location.pathname.split('/')[1];
-    axios.get(`http://3.95.173.198:3001/products/${itemId}`).then(response => {
-      console.log('WE MADE IT HERE');
-      // const randomIndex = Math.floor(Math.random() * response.data.length);
-      const randomProduct = response.data[0];
-      // console.log(randomProduct);
-      randomProduct.freeShipping = randomProduct.freeShipping === 'true';
-      randomProduct.shippingRestriction = randomProduct.shippingRestriction === 'true';
-      // const variants = response.data;
-      // const randomVariant = randomProduct;
-      this.getVariants(randomProduct.itemId);
+    axios
+      .get(`http://3.95.173.198:3001/products/${itemId}`, {
+        headers: {
+          'Access-Control-Allow-Origin': '*'
+        }
+      })
+      .then(response => {
+        console.log('WE MADE IT HERE');
+        // const randomIndex = Math.floor(Math.random() * response.data.length);
+        const randomProduct = response.data[0];
+        // console.log(randomProduct);
+        randomProduct.freeShipping = randomProduct.freeShipping === 'true';
+        randomProduct.shippingRestriction = randomProduct.shippingRestriction === 'true';
+        // const variants = response.data;
+        // const randomVariant = randomProduct;
+        this.getVariants(randomProduct.itemId);
 
-      this.setState({
-        product: randomProduct
+        this.setState({
+          product: randomProduct
+        });
       });
-    });
   }
 
   getVariants(itemId) {
