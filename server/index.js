@@ -32,23 +32,23 @@ app.use((req, res, next) => {
 /// for deployment to EC2 ////////
 /// setup as a proxy for db //////
 //////////////////////////////////
-const proxy = require('http-proxy-middleware');
+// const proxy = require('http-proxy-middleware');
 
-app.use(
-  '/products/:itemId',
-  proxy({
-    target: 'http://52.0.82.54:3002',
-    changeOrigin: true
-  })
-);
+// app.use(
+//   '/products/:itemId',
+//   proxy({
+//     target: 'http://52.0.82.54:3002',
+//     changeOrigin: true
+//   })
+// );
 
-app.use(
-  '/variants/:itemId',
-  proxy({
-    target: 'http://52.0.82.54:3002',
-    changeOrigin: true
-  })
-);
+// app.use(
+//   '/variants/:itemId',
+//   proxy({
+//     target: 'http://52.0.82.54:3002',
+//     changeOrigin: true
+//   })
+// );
 
 //////////////////////////////////
 //////////////////////////////////
@@ -94,26 +94,26 @@ app.use(
 ///////////////////////////////////
 ///////////////////////////////////
 
-// app.get('/products/:itemId', function gettingProducts(req, res) {
-//   getProduct(req.params.itemId)
-//     .then(product => {
-//       res.status(200).send(product);
-//     })
-//     .catch(err => {
-//       res.status(500).send(err);
-//     });
-// });
+app.get('/products/:itemId', function gettingProducts(req, res) {
+  getProduct(req.params.itemId)
+    .then(product => {
+      res.status(200).send(product);
+    })
+    .catch(err => {
+      res.status(500).send(err);
+    });
+});
 
-// app.get('/variants/:itemId', function gettingVariants(req, res) {
-//   const itemId = req.params.itemId;
-//   getVariants(itemId)
-//     .then(variants => {
-//       res.status(200).send(variants);
-//     })
-//     .catch(err => {
-//       res.status(500).send(err);
-//     });
-// });
+app.get('/variants/:itemId', function gettingVariants(req, res) {
+  const itemId = req.params.itemId;
+  getVariants(itemId)
+    .then(variants => {
+      res.status(200).send(variants);
+    })
+    .catch(err => {
+      res.status(500).send(err);
+    });
+});
 
 // app.post('/products/', function postingProduct(req, res) {
 //   const product = req.body;
