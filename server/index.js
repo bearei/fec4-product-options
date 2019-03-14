@@ -17,8 +17,8 @@ const port = process.env.PORT || 3001;
 
 app.use(bodyParser.json());
 
-// app.use('/:itemId', express.static(__dirname + '/../public'));
 app.use('/', express.static(path.join(__dirname, '../loaderio')));
+app.use('/:itemId', express.static(__dirname + '/../public'));
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
