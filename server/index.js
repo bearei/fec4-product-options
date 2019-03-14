@@ -27,7 +27,7 @@ const proxy = require('http-proxy-middleware');
 app.use(
   '/products/:itemId',
   proxy({
-    target: 'http://3.83.29.79:3002',
+    target: 'http://52.0.82.54:3002',
     changeOrigin: true
   })
 );
@@ -35,7 +35,7 @@ app.use(
 app.use(
   '/variants/:itemId',
   proxy({
-    target: 'http://3.83.29.79:3002',
+    target: 'http://52.0.82.54:3002',
     changeOrigin: true
   })
 );
@@ -43,7 +43,7 @@ app.use(
 app.use(
   '/products/',
   proxy({
-    target: 'http://3.83.29.79:3002',
+    target: 'http://52.0.82.54:3002',
     changeOrigin: true
   })
 );
