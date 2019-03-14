@@ -23,6 +23,7 @@ app.use('/:itemId', express.static(__dirname + '/../public'));
 /// setup as a proxy for db //////
 //////////////////////////////////
 const proxy = require('http-proxy-middleware');
+console.log('here in server!!!!');
 
 app.use(
   '/products/:itemId',
