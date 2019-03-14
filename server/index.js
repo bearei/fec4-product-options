@@ -33,31 +33,22 @@ app.use((req, res, next) => {
 /// setup as a proxy for db //////
 //////////////////////////////////
 const proxy = require('http-proxy-middleware');
-console.log('here in server!!!!');
 
-// app.use(
-//   '/products/:itemId',
-//   proxy({
-//     target: 'http://52.0.82.54:3002',
-//     changeOrigin: true
-//   })
-// );
+app.use(
+  '/products/:itemId',
+  proxy({
+    target: 'http://52.0.82.54:3002',
+    changeOrigin: true
+  })
+);
 
-// app.use(
-//   '/variants/:itemId',
-//   proxy({
-//     target: 'http://52.0.82.54:3002',
-//     changeOrigin: true
-//   })
-// );
-
-// app.use(
-//   '/products/',
-//   proxy({
-//     target: 'http://52.0.82.54:3002',
-//     changeOrigin: true
-//   })
-// );
+app.use(
+  '/variants/:itemId',
+  proxy({
+    target: 'http://52.0.82.54:3002',
+    changeOrigin: true
+  })
+);
 
 //////////////////////////////////
 //////////////////////////////////
@@ -74,42 +65,30 @@ console.log('here in server!!!!');
 //     console.error('error connecting: ' + err.stack);
 //     return;
 //   }
-
-//   // query = ("SELECT * FROM products WHERE itemId = 1")
-//   // connection.
-//   // console.log
 //   console.log('connected as id ' + connection.threadId);
 // });
-
-// connection.query(
-//   ('SELECT * FROM products WHERE itemId = 1',
-//   function(error, results, fields) {
-//     if (error) throw error;
-//     console.log('The solution is: ', results[0]);
-//   })
-// );
 
 ///////////////////////////////////
 /////// Trying out Redis //////////
 ///////////////////////////////////
 
-client.on('error', function(err) {
-  console.log('Error ' + err);
-});
+// client.on('error', function(err) {
+//   console.log('Error ' + err);
+// });
 
-const findProductCache = (req, res) => {
-  client.get(req.params.id, (err, data) => {
-    if (data) {
-      res.send(data);
-    } else {
-      getProduct(req.params.id).then(product => {
-        client.setex(req.params.id, 120, JSON.stringify(product));
-        res.send(product);
-      });
-    }
-  });
-};
-app.get('/products/:itemId', findProductCache);
+// const findProductCache = (req, res) => {
+//   client.get(req.params.id, (err, data) => {
+//     if (data) {
+//       res.send(data);
+//     } else {
+//       getProduct(req.params.id).then(product => {
+//         client.setex(req.params.id, 120, JSON.stringify(product));
+//         res.send(product);
+//       });
+//     }
+//   });
+// };
+// app.get('/products/:itemId', findProductCache);
 
 ///////////////////////////////////
 ///////////////////////////////////
@@ -125,16 +104,16 @@ app.get('/products/:itemId', findProductCache);
 //     });
 // });
 
-app.get('/variants/:itemId', function gettingVariants(req, res) {
-  const itemId = req.params.itemId;
-  getVariants(itemId)
-    .then(variants => {
-      res.status(200).send(variants);
-    })
-    .catch(err => {
-      res.status(500).send(err);
-    });
-});
+// app.get('/variants/:itemId', function gettingVariants(req, res) {
+//   const itemId = req.params.itemId;
+//   getVariants(itemId)
+//     .then(variants => {
+//       res.status(200).send(variants);
+//     })
+//     .catch(err => {
+//       res.status(500).send(err);
+//     });
+// });
 
 // app.post('/products/', function postingProduct(req, res) {
 //   const product = req.body;
