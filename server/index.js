@@ -4,8 +4,8 @@ const bodyParser = require('body-parser');
 // const cors = require('cors');
 const path = require('path');
 
-var redis = require('redis'),
-  client = redis.createClient();
+// var redis = require('redis'),
+//   client = redis.createClient();
 
 const {
   getProduct,
