@@ -16,7 +16,8 @@
     "build": "webpack --mode production",
     "db:setup": "node db/seed.js",
     "create:csvs": "node --max-old-space-size=8000 db/generateCSVs.js",
-    "seed:maria": "mysql -u root < db/mariadb.sql"
+    "seed:maria": "mysql -u root < db/mariadb.sql",
+    "artillery": "artillery run stress-test.yml"
   },
   "dependencies": {
     "artillery": "^1.6.0-27",
