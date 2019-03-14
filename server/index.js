@@ -3,13 +3,13 @@ const express = require('express');
 const bodyParser = require('body-parser');
 // const cors = require('cors');
 
-// const {
-//   getProduct,
-//   createProduct,
-//   updateProduct,
-//   deleteProduct,
-//   getVariants
-// } = require('../db/index');
+const {
+  getProduct,
+  createProduct,
+  updateProduct,
+  deleteProduct,
+  getVariants
+} = require('../db/index');
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -25,35 +25,35 @@ app.use('/:itemId', express.static(__dirname + '/../public'));
 const proxy = require('http-proxy-middleware');
 console.log('here in server!!!!');
 
-app.use(
-  '/products/:itemId',
-  proxy({
-    target: 'http://52.0.82.54:3002',
-    changeOrigin: true
-  })
-);
+// app.use(
+//   '/products/:itemId',
+//   proxy({
+//     target: 'http://52.0.82.54:3002',
+//     changeOrigin: true
+//   })
+// );
 
-app.use(
-  '/variants/:itemId',
-  proxy({
-    target: 'http://52.0.82.54:3002',
-    changeOrigin: true
-  })
-);
+// app.use(
+//   '/variants/:itemId',
+//   proxy({
+//     target: 'http://52.0.82.54:3002',
+//     changeOrigin: true
+//   })
+// );
 
-app.use(
-  '/products/',
-  proxy({
-    target: 'http://52.0.82.54:3002',
-    changeOrigin: true
-  })
-);
+// app.use(
+//   '/products/',
+//   proxy({
+//     target: 'http://52.0.82.54:3002',
+//     changeOrigin: true
+//   })
+// );
 
 //////////////////////////////////
 //////////////////////////////////
 // var mysql = require('mysql');
 // var connection = mysql.createConnection({
-//   host: '3.83.29.79',
+//   host: '52.0.82.54',
 //   user: 'root',
 //   password: '',
 //   database: 'product_options'
@@ -65,29 +65,40 @@ app.use(
 //     return;
 //   }
 
+//   // query = ("SELECT * FROM products WHERE itemId = 1")
+//   // connection.
+//   // console.log
 //   console.log('connected as id ' + connection.threadId);
 // });
 
-// app.get('/products/:itemId', function gettingProducts(req, res) {
-//   getProduct(req.params.itemId)
-//     .then(product => {
-//       res.status(200).send(product);
-//     })
-//     .catch(err => {
-//       res.status(500).send(err);
-//     });
-// });
+// connection.query(
+//   ('SELECT * FROM products WHERE itemId = 1',
+//   function(error, results, fields) {
+//     if (error) throw error;
+//     console.log('The solution is: ', results[0]);
+//   })
+// );
 
-// app.get('/variants/:itemId', function gettingVariants(req, res) {
-//   const itemId = req.params.itemId;
-//   getVariants(itemId)
-//     .then(variants => {
-//       res.status(200).send(variants);
-//     })
-//     .catch(err => {
-//       res.status(500).send(err);
-//     });
-// });
+app.get('/products/:itemId', function gettingProducts(req, res) {
+  getProduct(req.params.itemId)
+    .then(product => {
+      res.status(200).send(product);
+    })
+    .catch(err => {
+      res.status(500).send(err);
+    });
+});
+
+app.get('/variants/:itemId', function gettingVariants(req, res) {
+  const itemId = req.params.itemId;
+  getVariants(itemId)
+    .then(variants => {
+      res.status(200).send(variants);
+    })
+    .catch(err => {
+      res.status(500).send(err);
+    });
+});
 
 // app.post('/products/', function postingProduct(req, res) {
 //   const product = req.body;

@@ -30,6 +30,7 @@
     "enzyme-adapter-react-16": "^1.9.1",
     "express": "^4.16.4",
     "faker": "^4.1.0",
+    "http-proxy-middleware": "^0.19.1",
     "jest": "^24.1.0",
     "jquery": "^3.3.1",
     "knex": "^0.16.3",

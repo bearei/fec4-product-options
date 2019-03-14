@@ -9,6 +9,7 @@ const getProduct = itemId => {
   return knex('products')
     .where('itemId', itemId)
     .then(product => {
+      console.log('im here in db');
       return product;
     });
 };
