@@ -18,7 +18,7 @@ const {
 const app = express();
 const port = process.env.PORT || 3001;
 
-app.use(bodyParser.json());
+
 
 app.use('/', express.static(path.join(__dirname, '../loaderio')));
 app.use('/:itemId', express.static(__dirname + '/../public'));
@@ -57,6 +57,8 @@ app.use(
     changeOrigin: true
   })
 );
+
+app.use(bodyParser.json());
 
 //////////////////////////////////
 //////////////////////////////////
