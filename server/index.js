@@ -50,6 +50,14 @@ app.use((req, res, next) => {
 //   })
 // );
 
+app.use(
+  '/products/',
+  proxy({
+    target: 'http://52.0.82.54:3002',
+    changeOrigin: true
+  })
+);
+
 //////////////////////////////////
 //////////////////////////////////
 // var mysql = require('mysql');
@@ -72,17 +80,18 @@ app.use((req, res, next) => {
 /////// Trying out Redis //////////
 ///////////////////////////////////
 
-client.on('error', function(err) {
-  console.log('Error ' + err);
-});
+// client.on('error', function(err) {
+//   console.log('Error ' + err);
+// });
 
 const findProductCache = (req, res) => {
+  let id = req.params.itemId;
   client.get(req.params.itemId, (err, data) => {
     if (data) {
       res.send(data);
     } else {
-      getProduct(req.params.id).then(product => {
-        client.setex(req.params.id, 120, JSON.stringify(product));
+      getProduct(id).then(product => {
+        client.setex(id, 120, JSON.stringify(product));
         res.send(product);
       });
     }

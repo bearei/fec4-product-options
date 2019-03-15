@@ -1,5 +1,5 @@
 config:
-  target: 'http://3.82.213.114:3001'
+  target: 'http://18.212.13.974:3001'
   phases:
     - duration: 300
       arrivalRate: 1000
@@ -11,9 +11,9 @@ scenarios:
       # - post:
       #     url: '/products/'
       #     json:
-      #       brand: 'brand'
-      #       title: 'title'
-      #       averageRating: 23
-      #       reviewCount: 23
-      #       freeShipping: 'true'
-      #       shippingRestriction: 'false'
+      # brand: 'brand'
+      # title: 'title'
+      # averageRating: 23
+      # reviewCount: 23
+      # freeShipping: 'true'
+      # shippingRestriction: 'false'

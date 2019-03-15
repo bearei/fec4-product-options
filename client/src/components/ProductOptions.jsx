@@ -43,7 +43,7 @@ class ProductOptions extends React.Component {
   getRandomProduct() {
     const itemId = window.location.pathname.split('/')[1];
     axios
-      .get(`http://3.95.173.198:3001/products/${itemId}`, { crossdomain: true })
+      .get(`http://18.212.13.97:3001/products/${itemId}`, { crossdomain: true })
       .then(response => {
         // const randomIndex = Math.floor(Math.random() * response.data.length);
         const randomProduct = response.data[0];
@@ -61,7 +61,7 @@ class ProductOptions extends React.Component {
   }
 
   getVariants(itemId) {
-    axios.get(`http://3.95.173.198:3001/variants/${itemId}`).then(response => {
+    axios.get(`http://18.212.13.97:3001/variants/${itemId}`).then(response => {
       const randomIndex = Math.floor(Math.random() * response.data.length);
       // console.log(response.data);
       const variants = response.data;
