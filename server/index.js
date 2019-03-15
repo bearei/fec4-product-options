@@ -19,7 +19,7 @@ const app = express();
 const port = process.env.PORT || 3001;
 
 app.use('/', express.static(path.join(__dirname, '../loaderio')));
-app.use('/:itemId', express.static(__dirname + '/../public'));
+app.use('/shopping/:itemId', express.static(__dirname + '/../public'));
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
@@ -122,6 +122,7 @@ app.get('/products/:itemId', findProductCache);
 
 app.get('/variants/:itemId', function gettingVariants(req, res) {
   const itemId = req.params.itemId;
+  console.log('PARAM ID', itemId);
   getVariants(itemId)
     .then(variants => {
       res.status(200).send(variants);
