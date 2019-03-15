@@ -4,8 +4,8 @@ const bodyParser = require('body-parser');
 // const cors = require('cors');
 const path = require('path');
 
-// var redis = require('redis'),
-//   client = redis.createClient();
+var redis = require('redis'),
+  client = redis.createClient();
 
 const {
   getProduct,
@@ -72,37 +72,37 @@ app.use((req, res, next) => {
 /////// Trying out Redis //////////
 ///////////////////////////////////
 
-// client.on('error', function(err) {
-//   console.log('Error ' + err);
-// });
-
-// const findProductCache = (req, res) => {
-//   client.get(req.params.id, (err, data) => {
-//     if (data) {
-//       res.send(data);
-//     } else {
-//       getProduct(req.params.id).then(product => {
-//         client.setex(req.params.id, 120, JSON.stringify(product));
-//         res.send(product);
-//       });
-//     }
-//   });
-// };
-// app.get('/products/:itemId', findProductCache);
-
-///////////////////////////////////
-///////////////////////////////////
-///////////////////////////////////
-
-app.get('/products/:itemId', function gettingProducts(req, res) {
-  getProduct(req.params.itemId)
-    .then(product => {
-      res.status(200).send(product);
-    })
-    .catch(err => {
-      res.status(500).send(err);
-    });
+client.on('error', function(err) {
+  console.log('Error ' + err);
 });
+
+const findProductCache = (req, res) => {
+  client.get(req.params.itemId, (err, data) => {
+    if (data) {
+      res.send(data);
+    } else {
+      getProduct(req.params.id).then(product => {
+        client.setex(req.params.id, 120, JSON.stringify(product));
+        res.send(product);
+      });
+    }
+  });
+};
+app.get('/products/:itemId', findProductCache);
+
+///////////////////////////////////
+///////////////////////////////////
+///////////////////////////////////
+
+// app.get('/products/:itemId', function gettingProducts(req, res) {
+//   getProduct(req.params.itemId)
+//     .then(product => {
+//       res.status(200).send(product);
+//     })
+//     .catch(err => {
+//       res.status(500).send(err);
+//     });
+// });
 
 app.get('/variants/:itemId', function gettingVariants(req, res) {
   const itemId = req.params.itemId;
