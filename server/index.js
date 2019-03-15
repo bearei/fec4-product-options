@@ -18,8 +18,6 @@ const {
 const app = express();
 const port = process.env.PORT || 3001;
 
-
-
 app.use('/', express.static(path.join(__dirname, '../loaderio')));
 app.use('/:itemId', express.static(__dirname + '/../public'));
 app.use((req, res, next) => {
@@ -50,13 +48,20 @@ const proxy = require('http-proxy-middleware');
 //   })
 // );
 
-app.use(
-  '/products/',
-  proxy({
-    target: 'http://52.0.82.54:3002',
-    changeOrigin: true
-  })
-);
+// app.use(
+//   '/products/',
+//   proxy({
+//     target: 'http://52.0.82.54:3002',
+//     changeOrigin: true
+//   })
+// );
+
+app.post('/products/', function postingProduct(req, res) {
+  const product = req.body;
+  createProduct(product).then(() => {
+    res.status(200).end();
+  });
+});
 
 app.use(bodyParser.json());
 
@@ -125,13 +130,6 @@ app.get('/variants/:itemId', function gettingVariants(req, res) {
       res.status(500).send(err);
     });
 });
-
-// app.post('/products/', function postingProduct(req, res) {
-//   const product = req.body;
-//   createProduct(product).then(() => {
-//     res.status(200).end();
-//   });
-// });
 
 // app.put('/products/:itemId', (req, res) => {
 //   const updatedItem = req.body;
