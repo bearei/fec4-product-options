@@ -32,7 +32,7 @@ app.use((req, res, next) => {
 /// for deployment to EC2 ////////
 /// setup as a proxy for db //////
 //////////////////////////////////
-// const proxy = require('http-proxy-middleware');
+const proxy = require('http-proxy-middleware');
 
 // app.use(
 //   '/products/:itemId',
