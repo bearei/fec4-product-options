@@ -41,7 +41,7 @@ class ProductOptions extends React.Component {
   }
   // will need to create get request for below product's 3 varieants - variants/:itemId
   getRandomProduct() {
-    const itemId = window.location.pathname.split('/')[1];
+    const itemId = window.location.pathname.split('/shopping/')[1];
     axios
       .get(`http://18.212.13.97:3001/products/${itemId}`, { crossdomain: true })
       .then(response => {

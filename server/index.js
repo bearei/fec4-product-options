@@ -30,7 +30,7 @@ app.use((req, res, next) => {
 /// for deployment to EC2 ////////
 /// setup as a proxy for db //////
 //////////////////////////////////
-const proxy = require('http-proxy-middleware');
+// const proxy = require('http-proxy-middleware');
 
 // app.use(
 //   '/products/:itemId',
@@ -55,6 +55,7 @@ const proxy = require('http-proxy-middleware');
 //     changeOrigin: true
 //   })
 // );
+app.use(bodyParser.json());
 
 app.post('/products/', function postingProduct(req, res) {
   const product = req.body;
@@ -63,28 +64,8 @@ app.post('/products/', function postingProduct(req, res) {
   });
 });
 
-app.use(bodyParser.json());
-
-//////////////////////////////////
-//////////////////////////////////
-// var mysql = require('mysql');
-// var connection = mysql.createConnection({
-//   host: '52.0.82.54',
-//   user: 'root',
-//   password: '',
-//   database: 'product_options'
-// });
-
-// connection.connect(function(err) {
-//   if (err) {
-//     console.error('error connecting: ' + err.stack);
-//     return;
-//   }
-//   console.log('connected as id ' + connection.threadId);
-// });
-
 ///////////////////////////////////
-/////// Trying out Redis //////////
+/////// Redis Cache //////////
 ///////////////////////////////////
 
 // client.on('error', function(err) {
@@ -110,6 +91,7 @@ app.get('/products/:itemId', findProductCache);
 ///////////////////////////////////
 ///////////////////////////////////
 
+//////// get request without redis ////////
 // app.get('/products/:itemId', function gettingProducts(req, res) {
 //   getProduct(req.params.itemId)
 //     .then(product => {
