@@ -1,4 +1,4 @@
-# scaled and deployed and existing service - Product Options Service for a site that sells outdoor recreational equipment
+# Scaled and Deployed an existing service - Product Options Service for a site that sells outdoor recreational equipment
 
 This service displays each product’s details and its selection of variations - which includes title, brand, shipment, type of color, size
 
