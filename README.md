@@ -15,10 +15,10 @@ This service displays each product’s details and its selection of variations -
 
 ## Usage
 
-1. Ensure that MongoDB is installed and running on your computer (`mongod`).
+1. Ensure that MariaDB is installed and running on your computer (with homebrew - `brew services start mariadb`).
 2. [Install the project's dependencies](#installing-dependencies).
-3. Open three terminal tabs for each of these processes: `mongod`, `npm run dev:react`, and `npm start`.
-4. Run tests with `npm test`.
+3. Open three terminal tabs for each of these processes: `brew services start mariadb`, `npm run dev:react`, and `npm start`.
+4. Run tests with `npm run test`.
 5. Navigate to `http://localhost:3001` to view the service.
 
 ## Requirements
