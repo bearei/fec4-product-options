@@ -1,6 +1,6 @@
-# HRR36 FEC Team 4 - Product Options
+# Product Options Service for a site that sells outdoor recreational equipment
 
-This repo includes the Product Options service of Team 4's Front End Capstone project.
+This service displays each product’s details and its selection of variations - which includes title, brand, shipment, type of color, size
 
 ## Related Projects
 
